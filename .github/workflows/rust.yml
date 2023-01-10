@@ -15,10 +15,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+    - name: install nightly
+      run: rustup toolchain install nightly
     - name: Build
       run: cargo build --verbose
     - name: Run tests
       run: cargo test --verbose
     - name: Run clippy
       run: cargo clippy
+    - name: benchmark
+      run: ./bench.sh | tee gha-bench.txt
+    - name: Store benchmark results
+      uses: benchmark-action/github-action-benchmark@v1
+      with:
+        name: Benchmark result (noirblanc)
+        tool: cargo
+        output-file-path: gha-bench.txt

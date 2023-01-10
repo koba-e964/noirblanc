@@ -10,17 +10,25 @@ pub struct Bitboard(pub u64);
 
 impl Bitboard {
     /// Creates an empty [`Bitboard`].
+    #[inline(always)]
     pub const fn new() -> Self {
         Self(0)
     }
     /// Creates a singleton.
+    #[inline(always)]
     pub const fn singleton(sq: Square) -> Self {
         Self(1 << sq.array_index())
     }
 
     /// Counts how many squares are in `self`.
+    #[inline(always)]
     pub const fn count(self) -> i16 {
         self.0.count_ones() as i16
+    }
+
+    #[inline(always)]
+    pub const fn is_empty(self) -> bool {
+        self.0 == 0
     }
 
     pub fn pop(&mut self) -> Option<Square> {
@@ -40,10 +48,12 @@ impl Bitboard {
 impl Iterator for Bitboard {
     type Item = Square;
 
+    #[inline(always)]
     fn next(&mut self) -> Option<Self::Item> {
         self.pop()
     }
 
+    #[inline(always)]
     fn size_hint(&self) -> (usize, Option<usize>) {
         (0, Some(64))
     }

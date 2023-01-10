@@ -12,7 +12,7 @@ pub struct Position(pub Bitboard, pub Bitboard, pub Color);
 
 impl Position {
     #[inline(always)]
-    pub const fn new() -> Self {
+    pub const fn startpos() -> Self {
         Self(
             Bitboard(0x8_1000_0000),
             Bitboard(0x10_0800_0000),
@@ -24,6 +24,7 @@ impl Position {
     pub const fn side_to_play(self) -> Color {
         self.2
     }
+
     #[inline]
     pub const fn count_disks(self, color: Color) -> i16 {
         let Position(bl, wh, _turn) = self;
@@ -31,6 +32,10 @@ impl Position {
             Color::Black => bl.count(),
             Color::White => wh.count(),
         }
+    }
+
+    pub fn pass(&mut self) {
+        self.2 = self.2.flip();
     }
 
     pub fn make_move(&mut self, disk: Bitboard) {
@@ -42,7 +47,7 @@ impl Position {
             }
             Color::White => {
                 let (newwh, newbl) = move_bit_board(wh, bl, disk);
-                Self(newbl, newwh, Color::White)
+                Self(newbl, newwh, Color::Black)
             }
         };
     }
@@ -90,7 +95,7 @@ impl core::fmt::Display for Position {
 
 impl core::default::Default for Position {
     fn default() -> Self {
-        Self::new()
+        Self::startpos()
     }
 }
 
@@ -200,7 +205,7 @@ mod tests {
 
     #[test]
     fn valid_moves_test() {
-        let pos = Position::new();
+        let pos = Position::startpos();
         let mvs = pos.valid_moves();
         assert_eq!(mvs.count(), 4);
     }

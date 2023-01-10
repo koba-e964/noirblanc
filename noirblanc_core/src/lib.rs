@@ -1,5 +1,11 @@
+#![cfg_attr(bench, feature(test))]
+#[cfg(bench)]
+extern crate test;
+
 pub mod bitboard;
 mod color;
+#[doc(hidden)]
+pub mod perft;
 pub mod position;
 mod square;
 
