@@ -23,7 +23,7 @@ pub fn perft(mut pos: Position, depth: usize, skipped: bool) -> Stat {
     }
     let mut answer_all = 0;
     for mv in all {
-        let mut next = pos.clone();
+        let mut next = pos;
         next.make_move(Bitboard::singleton(mv));
         let sub = perft(next, depth - 1, false);
         answer_all += sub.all;
