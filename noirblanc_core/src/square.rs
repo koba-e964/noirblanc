@@ -58,12 +58,12 @@ impl Square {
     }
 
     /// Finds the index of `self` in range `1..=64`.
-    /// It is guaranteed that the result is equal to the internal representation, `9 * file + rank - 9`.
+    /// It is guaranteed that the result is equal to the internal representation, `file + rank * 8 - 8`.
     ///
     /// Examples:
     /// ```
     /// use noirblanc_core::Square;
-    /// assert_eq!(Square::new(3, 6).unwrap().index(), 22);
+    /// assert_eq!(Square::new(3, 6).unwrap().index(), 43);
     /// ```
     #[inline(always)]
     #[export_name = "Square_index"]
