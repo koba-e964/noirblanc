@@ -140,7 +140,7 @@ fn valid_moves_set_sub(my: u64, mask: u64, dir: usize) -> u64 {
     let fr3 = fr2 | maskr & (fr2 >> dir2);
     let fl4 = fl3 | maskl & (fl3 << dir2);
     let fr4 = fr3 | maskr & (fr3 >> dir2);
-    fl4 << dir | fr4 >> dir
+    (fl4 << dir) | (fr4 >> dir)
 }
 
 #[derive(Clone, Copy)]
