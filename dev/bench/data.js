@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1736327673681,
+  "lastUpdate": 1736327813558,
   "repoUrl": "https://github.com/koba-e964/noirblanc",
   "entries": {
     "Benchmark result (noirblanc)": [
@@ -179,6 +179,36 @@ window.BENCHMARK_DATA = {
             "name": "perft depth 8",
             "value": 2051078,
             "range": "± 46905",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3303362+koba-e964@users.noreply.github.com",
+            "name": "koba-e964",
+            "username": "koba-e964"
+          },
+          "committer": {
+            "email": "3303362+koba-e964@users.noreply.github.com",
+            "name": "koba-e964",
+            "username": "koba-e964"
+          },
+          "distinct": true,
+          "id": "146cf444d9c8e6b5eae5470eaba7bfa49dc06639",
+          "message": "Update to Rust 2021",
+          "timestamp": "2025-01-08T18:15:52+09:00",
+          "tree_id": "549418069761f964443bc5e64f7709027e9e3fbb",
+          "url": "https://github.com/koba-e964/noirblanc/commit/146cf444d9c8e6b5eae5470eaba7bfa49dc06639"
+        },
+        "date": 1736327812387,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "perft depth 8",
+            "value": 2052877,
+            "range": "± 14441",
             "unit": "ns/iter"
           }
         ]
