@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1736329519645,
+  "lastUpdate": 1736330192608,
   "repoUrl": "https://github.com/koba-e964/noirblanc",
   "entries": {
     "Benchmark result (noirblanc)": [
@@ -275,6 +275,42 @@ window.BENCHMARK_DATA = {
             "name": "perft depth 10",
             "value": 119594801,
             "range": "± 358119",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "3303362+koba-e964@users.noreply.github.com",
+            "name": "koba-e964",
+            "username": "koba-e964"
+          },
+          "committer": {
+            "email": "3303362+koba-e964@users.noreply.github.com",
+            "name": "koba-e964",
+            "username": "koba-e964"
+          },
+          "distinct": true,
+          "id": "98cc6520f17516ae3b2ca78ba68c2b6e22cfa487",
+          "message": "Fix",
+          "timestamp": "2025-01-08T18:55:22+09:00",
+          "tree_id": "85953d03830c0f8369199f17b295f4c88dbab91d",
+          "url": "https://github.com/koba-e964/noirblanc/commit/98cc6520f17516ae3b2ca78ba68c2b6e22cfa487"
+        },
+        "date": 1736330192311,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "perft depth 8",
+            "value": 2154412,
+            "range": "± 25006",
+            "unit": "ns/iter"
+          },
+          {
+            "name": "perft depth 10",
+            "value": 118381256,
+            "range": "± 2683542",
             "unit": "ns/iter"
           }
         ]
