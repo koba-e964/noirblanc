@@ -144,45 +144,42 @@ fn valid_moves_set_sub(my: u64, mask: u64, dir: usize) -> u64 {
 }
 
 #[derive(Clone, Copy)]
-enum Dir {
-    Left,
-    Right,
-}
+struct Transfer(u64, usize);
 
-#[derive(Clone, Copy)]
-struct Transfer(Dir, u64, usize);
-
-const TRANSFERS: [Transfer; 8] = [
-    Transfer(Dir::Right, 0xffffffffffffff00, 8), // up
-    Transfer(Dir::Right, 0xfefefefefefefe00, 9), // up left
-    Transfer(Dir::Right, 0x7f7f7f7f7f7f7f00, 7), // up right
-    Transfer(Dir::Right, 0xfefefefefefefefe, 1), // left
-    Transfer(Dir::Left, 0x7f7f7f7f7f7f7f7f, 1),  // right
-    Transfer(Dir::Left, 0x00fefefefefefefe, 7),  // down left
-    Transfer(Dir::Left, 0x007f7f7f7f7f7f7f, 9),  // down right
-    Transfer(Dir::Left, 0x00ffffffffffffff, 8),
-]; // down
-
-fn trans_op(trans: Transfer, x: u64) -> u64 {
-    let Transfer(dir, mask, sh) = trans;
-    match dir {
-        Dir::Left => (x & mask) << sh,
-        Dir::Right => (x & mask) >> sh,
-    }
-}
+const TRANSFERS_RIGHT: [Transfer; 4] = [
+    Transfer(0xffffffffffffff00, 8), // up
+    Transfer(0xfefefefefefefe00, 9), // up left
+    Transfer(0x7f7f7f7f7f7f7f00, 7), // up right
+    Transfer(0xfefefefefefefefe, 1), // left
+];
+const TRANSFERS_LEFT: [Transfer; 4] = [
+    Transfer(0x7f7f7f7f7f7f7f7f, 1), // right
+    Transfer(0x00fefefefefefefe, 7), // down left
+    Transfer(0x007f7f7f7f7f7f7f, 9), // down right
+    Transfer(0x00ffffffffffffff, 8), // down
+];
 
 /// disk must be a singleton
-fn flippable_indices_set(my: u64, opp: u64, dist: u64) -> u64 {
+fn flippable_indices_set(my: u64, opp: u64, disk: u64) -> u64 {
     let mut cur = 0;
-    for &trans in TRANSFERS.iter() {
-        cur |= flippable_indices_in_dir(trans, my, opp, dist);
+    for &trans in TRANSFERS_RIGHT.iter() {
+        cur |= flippable_indices_in_dir_fixed(|x| (x & trans.0) >> trans.1, my, opp, disk);
+    }
+    for &trans in TRANSFERS_LEFT.iter() {
+        cur |= flippable_indices_in_dir_fixed(|x| (x & trans.0) << trans.1, my, opp, disk)
     }
     cur
 }
 
 /// reference: <http://ja.wikipedia.org/wiki/%E3%82%AA%E3%82%BB%E3%83%AD%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E3%83%93%E3%83%83%E3%83%88%E3%83%9C%E3%83%BC%E3%83%89>
-fn flippable_indices_in_dir(trans: Transfer, my: u64, opp: u64, disk: u64) -> u64 {
-    let ma = trans_op(trans, disk);
+#[inline(always)]
+fn flippable_indices_in_dir_fixed(
+    trans_op: impl Fn(u64) -> u64,
+    my: u64,
+    opp: u64,
+    disk: u64,
+) -> u64 {
+    let ma = trans_op(disk);
     let mut rev = 0;
     let mut mask = ma;
     while mask != 0 {
@@ -190,7 +187,7 @@ fn flippable_indices_in_dir(trans: Transfer, my: u64, opp: u64, disk: u64) -> u6
             break;
         }
         rev |= mask;
-        mask = trans_op(trans, mask);
+        mask = trans_op(mask);
     }
     if (mask & my) != 0 {
         rev

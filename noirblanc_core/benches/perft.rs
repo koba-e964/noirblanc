@@ -7,15 +7,16 @@ const TABLE_ALL: [u64; 13] = [
 ];
 
 fn bench_perft(c: &mut Criterion) {
-    let depth = 8;
-    let expected = TABLE_ALL[depth];
-    c.bench_function(&format!("perft depth {}", depth), |b| {
-        b.iter(|| {
-            let pos = Position::startpos();
-            let result = perft::perft(pos, depth, false);
-            assert_eq!(result.all, expected);
+    for depth in [8, 10] {
+        let expected = TABLE_ALL[depth];
+        c.bench_function(&format!("perft depth {}", depth), |b| {
+            b.iter(|| {
+                let pos = Position::startpos();
+                let result = perft::perft(pos, depth, false);
+                assert_eq!(result.all, expected);
+            });
         });
-    });
+    }
 }
 
 criterion_group!(benches, bench_perft);
