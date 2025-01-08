@@ -1,8 +1,6 @@
 use crate::Square;
 
-/**
- * The implementation is done in reference to https://github.com/koba-e964/othello-ai/blob/master/CBoard.hs, which uses routines that are originally in edax.
- */
+// The implementation is done in reference to https://github.com/koba-e964/othello-ai/blob/master/CBoard.hs, which uses routines that are originally in edax.
 
 /// A set of squares.
 #[derive(Clone, Copy, PartialEq, Eq, Default)]

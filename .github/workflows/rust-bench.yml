@@ -1,0 +1,30 @@
+name: Rust Benchmark
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: --deny warnings
+  RUSTDOCFLAGS: --deny warnings
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: benchmark
+        run: ./bench.sh | tee gha-bench.txt
+      - name: Store benchmark results
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          name: Benchmark result (noirblanc)
+          tool: cargo
+          output-file-path: gha-bench.txt
+          auto-push: false
+      - name: Push benchmark result
+        run: git push 'https://koba-e964:${{ secrets.GITHUB_TOKEN }}@github.com/koba-e964/noirblanc.git' gh-pages:gh-pages

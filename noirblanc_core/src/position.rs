@@ -1,8 +1,6 @@
 use crate::{Bitboard, Color};
 
-/**
- * The implementation is done in reference to https://github.com/koba-e964/othello-ai/blob/master/CBoard.hs, which uses routines that are originally in edax.
- */
+// The implementation is done in reference to https://github.com/koba-e964/othello-ai/blob/master/CBoard.hs, which uses routines that are originally in edax.
 
 /// A position of reversi.
 ///
@@ -107,8 +105,9 @@ pub const fn get_tempo(light: u64, dark: u64) -> i16 {
     light.count_ones() as i16 + dark.count_ones() as i16
 }
 
-/// Port from https://github.com/koba-e964/othello-ai/blob/master/CBoard.hs
-/// disk must be a singleton.
+/// Port from <https://github.com/koba-e964/othello-ai/blob/master/CBoard.hs>
+///
+/// `disk` must be a singleton.
 pub fn move_bit_board(my: Bitboard, opp: Bitboard, disk: Bitboard) -> (Bitboard, Bitboard) {
     debug_assert_eq!(disk.count(), 1);
     let val = flippable_indices_set(my.0, opp.0, disk.0);
@@ -116,7 +115,8 @@ pub fn move_bit_board(my: Bitboard, opp: Bitboard, disk: Bitboard) -> (Bitboard,
 }
 
 /// set of valid moves represented by Places
-/// reference : http://code.google.com/p/edax-reversi/source/browse/src/board.c
+///
+/// reference: <http://code.google.com/p/edax-reversi/source/browse/src/board.c>
 pub fn valid_moves_set(bl: Bitboard, wh: Bitboard) -> Bitboard {
     let bl = bl.0;
     let wh = wh.0;
@@ -180,7 +180,7 @@ fn flippable_indices_set(my: u64, opp: u64, dist: u64) -> u64 {
     cur
 }
 
-/// reference: http://ja.wikipedia.org/wiki/%E3%82%AA%E3%82%BB%E3%83%AD%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E3%83%93%E3%83%83%E3%83%88%E3%83%9C%E3%83%BC%E3%83%89
+/// reference: <http://ja.wikipedia.org/wiki/%E3%82%AA%E3%82%BB%E3%83%AD%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B%E3%83%93%E3%83%83%E3%83%88%E3%83%9C%E3%83%BC%E3%83%89>
 fn flippable_indices_in_dir(trans: Transfer, my: u64, opp: u64, disk: u64) -> u64 {
     let ma = trans_op(trans, disk);
     let mut rev = 0;

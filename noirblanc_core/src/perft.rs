@@ -47,22 +47,4 @@ mod tests {
             assert_eq!(result.all, expected);
         }
     }
-
-    #[cfg(bench)]
-    #[bench]
-    fn bench_perft_8(b: &mut test::Bencher) {
-        let depth = 8;
-        bench_perft(b, depth);
-    }
-
-    #[cfg(bench)]
-    #[inline(always)]
-    fn bench_perft(b: &mut test::Bencher, depth: usize) {
-        let expected = TABLE_ALL[depth];
-        b.iter(|| {
-            let pos = Position::startpos();
-            let result = perft(pos, depth, false);
-            assert_eq!(result.all, expected);
-        });
-    }
 }
