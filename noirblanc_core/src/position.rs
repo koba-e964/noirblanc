@@ -116,7 +116,7 @@ pub fn move_bit_board(my: Bitboard, opp: Bitboard, disk: Bitboard) -> (Bitboard,
 
 /// set of valid moves represented by Places
 ///
-/// reference: <http://code.google.com/p/edax-reversi/source/browse/src/board.c>
+/// reference: <https://github.com/abulmo/edax-reversi/blob/v4.6/src/board.c>
 pub fn valid_moves_set(bl: Bitboard, wh: Bitboard) -> Bitboard {
     let bl = bl.0;
     let wh = wh.0;
